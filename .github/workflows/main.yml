@@ -1,0 +1,22 @@
+name: Evercode checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_14.1.app && /usr/bin/xcodebuild -version
+
+      - name: Evercode checks
+        uses: 'devpass-tech/gitaction-testfile@v1'
+        with:
+          repo_name: ${{ github.repository }}
+          branch_name: ${{ github.head_ref }}
